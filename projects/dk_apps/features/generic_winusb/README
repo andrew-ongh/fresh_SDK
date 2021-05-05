@@ -1,0 +1,7 @@
+WARNING
+=======
+The FreeRTOS_Generic_WinUSB project is used only for verifying the correct
+operation of the USB hardware block and the corresponding low level drivers.
+It should not be used as an example for customer application development,
+as API and application flow might change in a future release.
+
