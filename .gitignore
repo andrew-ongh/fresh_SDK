@@ -1,0 +1,11 @@
+.metadata/
+*.lnk
+*.log
+*.xml
+*.bin
+*.elf
+*.map
+*.d
+*.o
+*.mk
+projects/dk_apps/ble_profiles/bms/DA14683-00-Debug_QSPI/makefile
