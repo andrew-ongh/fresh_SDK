@@ -27,6 +27,10 @@
 #include "sys_watchdog.h"
 #include "platform_devices.h"
 #include "bms_config.h"
+#include "hw_otpc.h"
+
+#include "sys_clock_mgr.h"
+#include "security_udi.h"
 
 /* Task priorities */
 #define mainBLE_BMS_TASK_PRIORITY              ( OS_TASK_PRIORITY_NORMAL )
@@ -107,6 +111,19 @@ static void system_init( void *pvParameters )
                        mainBLE_BMS_TASK_PRIORITY,       /* The priority assigned to the task. */
                        handle);                         /* The task handle. */
         OS_ASSERT(handle);
+
+        /* Get device unique ID */
+//        hw_otpc_init();
+//        cm_adjust_otp_access_timings();
+        uint8_t unique_device_id[UNIQUE_DEVICE_ID_LEN];
+        bool success = security_get_unique_device_id(unique_device_id);
+        OS_ASSERT(success == 1);
+
+        printf("Unique Device ID: ");
+        for(int i = 0; i < UNIQUE_DEVICE_ID_LEN; i++){
+             printf("%d ,", unique_device_id[i]);
+        }
+        printf("\n");
 
         /* the work of the SysInit task is done */
         OS_TASK_DELETE(OS_GET_CURRENT_TASK());

@@ -42,7 +42,7 @@
 		<link>
 			<name>startup</name>
 			<type>2</type>
-			<locationURI>SDKROOT/sdk/bsp/startup</locationURI>
+			<locationURI>SDKROOT/sdk/bsp/startup</locationURI> 
 		</link>
 		<link>
 			<name>sdk/FreeRTOS</name>
@@ -93,6 +93,11 @@
 			<name>sdk/peripherals</name>
 			<type>2</type>
 			<locationURI>SDKROOT/sdk/bsp/peripherals</locationURI>
+		</link>
+		<link>
+			<name>sdk/security</name>
+			<type>2</type>
+			<locationURI>SDKROOT/sdk/middleware/security</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
