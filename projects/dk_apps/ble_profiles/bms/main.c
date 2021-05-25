@@ -113,7 +113,7 @@ static void system_init( void *pvParameters )
         OS_ASSERT(handle);
 
         /* Get device unique ID */
-//        hw_otpc_init();
+        hw_otpc_init();
 //        cm_adjust_otp_access_timings();
         uint8_t unique_device_id[UNIQUE_DEVICE_ID_LEN];
         bool success = security_get_unique_device_id(unique_device_id);
