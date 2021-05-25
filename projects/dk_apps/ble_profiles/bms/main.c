@@ -52,6 +52,42 @@ void bms_task(void *params);
 static OS_TASK handle = NULL;
 
 /**
+ * \brief Get unique device identifier
+ *
+ * Function reads two fields from OTP (position/package and tester/timestamp) and joins them into
+ * unique device identifier.
+ *
+ * \return C string to the unique ID, hex encoded
+ * Example Unique Device ID: 00000055000000005F415F11070A0100
+ *
+ */
+char* DA14683_unique_id(void){
+        static char unique_id_str[UNIQUE_DEVICE_ID_LEN * 2 + 1] = {'0'};
+        static bool fetched_already = 0;
+
+        if(fetched_already == 1){
+                return unique_id_str;
+        }
+
+        hw_otpc_init();
+//        cm_adjust_otp_access_timings();  /* hw_otpc_set_speed() already called */
+        uint8_t unique_device_id[UNIQUE_DEVICE_ID_LEN];
+
+        bool success = security_get_unique_device_id(unique_device_id);
+        OS_ASSERT(success == 1);
+
+        /* Reformat uint8_t[] as char[] in hex. 2 chars for every uint8_t */
+        uint8_t i = 0;
+        for(; i < UNIQUE_DEVICE_ID_LEN; i++){
+                sprintf(unique_id_str + (i * 2), "%02X", unique_device_id[i]);
+        }
+
+        fetched_already = 1;
+
+        return unique_id_str;
+}
+
+/**
  * @brief System Initialization and creation of the BLE task
  */
 static void system_init( void *pvParameters )
@@ -112,18 +148,8 @@ static void system_init( void *pvParameters )
                        handle);                         /* The task handle. */
         OS_ASSERT(handle);
 
-        /* Get device unique ID */
-        hw_otpc_init();
-//        cm_adjust_otp_access_timings();
-        uint8_t unique_device_id[UNIQUE_DEVICE_ID_LEN];
-        bool success = security_get_unique_device_id(unique_device_id);
-        OS_ASSERT(success == 1);
-
-        printf("Unique Device ID: ");
-        for(int i = 0; i < UNIQUE_DEVICE_ID_LEN; i++){
-             printf("%d ,", unique_device_id[i]);
-        }
-        printf("\n");
+        char* unique_device_id = DA14683_unique_id();
+        printf("Unique Device ID: %s\n", unique_device_id);
 
         /* the work of the SysInit task is done */
         OS_TASK_DELETE(OS_GET_CURRENT_TASK());
