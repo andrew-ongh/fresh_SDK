@@ -62,7 +62,7 @@ static OS_TASK handle = NULL;
  *
  */
 char* DA14683_unique_id(void){
-        static char unique_id_str[UNIQUE_DEVICE_ID_LEN * 2 + 1] = {'0'};
+        static char unique_id_str[UNIQUE_DEVICE_ID_LEN * 2 + 1] = {0};
         static bool fetched_already = 0;
 
         if(fetched_already == 1){
@@ -77,9 +77,16 @@ char* DA14683_unique_id(void){
         OS_ASSERT(success == 1);
 
         /* Reformat uint8_t[] as char[] in hex. 2 chars for every uint8_t */
+        char binary_to_hex[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         uint8_t i = 0;
         for(; i < UNIQUE_DEVICE_ID_LEN; i++){
-                sprintf(unique_id_str + (i * 2), "%02X", unique_device_id[i]);
+                uint8_t hex_digit_0 = ((0xF0 & unique_device_id[i]) >> 4);
+                uint8_t hex_digit_1 = ((0x0F & unique_device_id[i]));
+                char char0 = binary_to_hex[hex_digit_0];
+                char char1 = binary_to_hex[hex_digit_1];
+
+                unique_id_str[(i * 2)    ] = char0;
+                unique_id_str[(i * 2) + 1] = char1;
         }
 
         fetched_already = 1;
