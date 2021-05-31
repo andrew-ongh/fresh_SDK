@@ -67,7 +67,7 @@ typedef enum {
 
 #define CLI_NOTIF               (1 << 15)
 
-#define UUID_SUOTA              0xFEF5
+#define UUID_SUOTA              "D20697CB-FAB2-41F9-82C3-D36AF65FBB26"
 
 #define L2CAP_CREDITS           5
 
@@ -694,15 +694,9 @@ static void handle_evt_gap_adv_report(const ble_evt_gap_adv_report_t *evt)
                 /* Device not found so we look for UUID */
                 if (!dev && (ad_type == GAP_DATA_TYPE_UUID16_LIST ||
                                                         ad_type == GAP_DATA_TYPE_UUID16_LIST_INC)) {
-                        size_t idx;
 
-                        for (idx = 0; idx < ad_len; idx += sizeof(uint16_t)) {
-                                if (get_u16(p + idx) == UUID_SUOTA) {
-                                        new_device = true;
-                                        dev = add_found_device(&evt->address, &dev_index);
-                                        break;
-                                }
-                        }
+                        new_device = true;
+                        dev = add_found_device(&evt->address, &dev_index);
 
                         continue;
                 }
@@ -785,13 +779,9 @@ static void handle_evt_gattc_mtu_changed(ble_evt_gattc_mtu_changed_t *evt)
 
 static void handle_evt_gattc_browse_svc(ble_evt_gattc_browse_svc_t *evt)
 {
-        /* Both SUOTA and DIS have 16-bit UUIDs, don't care about 128-bit UUIDs */
-        if (evt->uuid.type != ATT_UUID_16) {
-                return;
-        }
 
         switch (evt->uuid.uuid16) {
-        case UUID_SUOTA:
+        case 0x97CB:  //UUID_SUOTA:
                 if (peer_info.suota_client) {
                         return;
                 }

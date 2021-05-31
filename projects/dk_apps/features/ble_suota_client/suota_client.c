@@ -21,15 +21,15 @@
 #include "ble_uuid.h"
 #include "suota_client.h"
 
-#define UUID_SUOTA                              0xFEF5
-#define UUID_SUOTA_MEM_DEV                      "8082CAA8-41A6-4021-91C6-56F9B954CC34"
-#define UUID_SUOTA_PATCH_LEN                    "9D84B9A3-000C-49D8-9183-855B673FDA31"
-#define UUID_SUOTA_PATCH_DATA                   "457871E8-D516-4CA1-9116-57D0B17B9CB2"
-#define UUID_SUOTA_STATUS                       "5F78DF94-798C-46F5-990A-B3EB6A065C88"
-#define UUID_SUOTA_L2CAP_PSM                    "61C8849C-F639-4765-946E-5C3419BEBB2A"
-#define UUID_SUOTA_VERSION                      "64B4E8B5-0DE5-401B-A21D-ACC8DB3B913A"
-#define UUID_SUOTA_PATCH_DATA_CHAR_SIZE         "42C3DFDD-77BE-4D9C-8454-8F875267FB3B"
-#define UUID_SUOTA_MTU                          "B7DE1EEA-823D-43BB-A3AF-C4903DFCE23C"
+#define UUID_SUOTA                              "D20697CB-FAB2-41F9-82C3-D36AF65FBB26"
+#define UUID_SUOTA_MEM_DEV                      "D20697CC-FAB2-41F9-82C3-D36AF65FBB26"
+#define UUID_SUOTA_PATCH_LEN                    "D20697CF-FAB2-41F9-82C3-D36AF65FBB26"
+#define UUID_SUOTA_PATCH_DATA                   "D20697D0-FAB2-41F9-82C3-D36AF65FBB26"
+#define UUID_SUOTA_STATUS                       "D20697D1-FAB2-41F9-82C3-D36AF65FBB26"
+#define UUID_SUOTA_L2CAP_PSM                    "D20697D2-FAB2-41F9-82C3-D36AF65FBB26"
+#define UUID_SUOTA_VERSION                      "D20697D3-FAB2-41F9-82C3-D36AF65FBB26"
+#define UUID_SUOTA_PATCH_DATA_CHAR_SIZE         "D20697D4-FAB2-41F9-82C3-D36AF65FBB26"
+#define UUID_SUOTA_MTU                          "D20697D5-FAB2-41F9-82C3-D36AF65FBB26"
 
 typedef enum {
         MEM_DEV_OP_NONE,
@@ -245,7 +245,7 @@ ble_client_t *suota_client_init(const suota_client_callbacks_t *cb,
                 return NULL;
         }
 
-        ble_uuid_create16(UUID_SUOTA, &uuid);
+        ble_uuid_from_string(UUID_SUOTA, &uuid);
         if (!ble_uuid_equal(&uuid, &evt->uuid)) {
                 return NULL;
         }
