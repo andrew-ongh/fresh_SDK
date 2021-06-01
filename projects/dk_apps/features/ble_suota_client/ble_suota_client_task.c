@@ -780,8 +780,10 @@ static void handle_evt_gattc_mtu_changed(ble_evt_gattc_mtu_changed_t *evt)
 static void handle_evt_gattc_browse_svc(ble_evt_gattc_browse_svc_t *evt)
 {
 
+        printf("UUID 16: %x\n", evt->uuid.uuid16);
+
         switch (evt->uuid.uuid16) {
-        case 0x97CB:  //UUID_SUOTA:
+        case 0xBB26:  //UUID_SUOTA:
                 if (peer_info.suota_client) {
                         return;
                 }

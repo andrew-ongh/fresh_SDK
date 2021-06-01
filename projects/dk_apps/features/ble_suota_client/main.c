@@ -91,6 +91,8 @@ static void system_init( void *pvParameters )
         console_init();
         cli_init();
 
+        printf("SUOTA Client\n");
+
         /* Start the BLE Peripheral application task. */
         OS_TASK_CREATE("SUOTA",                         /* The text name assigned to the task, for
                                                            debug only; not used by the kernel. */
