@@ -23,6 +23,7 @@
 #include "osal.h"
 #include "sys_watchdog.h"
 #include "ble_att.h"
+#include "ble_config.h"
 #include "ble_common.h"
 #include "ble_gap.h"
 #include "ble_gatts.h"
@@ -528,6 +529,17 @@ void bms_task(void *params)
 
         /* Start BLE device as peripheral */
         ble_peripheral_start();
+
+        /* Set BLE address to be "private resolvable" using LE Privacy v1.2 */
+        own_address_t own_address1 = {
+                .addr_type = PRIVATE_CNTL,
+                .addr = {0}
+        };
+        ble_error_t status;
+        status = ble_gap_address_set(&own_address1 , 150);
+        if (status != BLE_STATUS_OK) {
+                printf("%s: failed. Status=%d\r\n", __func__, status);
+        }
 
         /* Register task to BLE framework to receive BLE event notifications */
         ble_register_app();
