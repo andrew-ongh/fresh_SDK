@@ -532,7 +532,7 @@ void bms_task(void *params)
 
         /* Set BLE address to be "private resolvable" using LE Privacy v1.2 */
         own_address_t own_address1 = {
-                .addr_type = PRIVATE_CNTL,
+                .addr_type = PRIVATE_RANDOM_NONRESOLVABLE_ADDRESS,
                 .addr = {0}
         };
         ble_error_t status;
@@ -553,14 +553,14 @@ void bms_task(void *params)
         bms = bms_init(NULL, &bms_config, &bms_cb);
 
         /* Set input/output capabilities */
-        ble_gap_set_io_cap(GAP_IO_CAP_DISP_ONLY);
+        ble_gap_set_io_cap(GAP_IO_CAP_NO_INPUT_OUTPUT);
 
 
         print_bonded_devices();
 
         /* Set advertising data and start advertising */
         ble_gap_adv_data_set(sizeof(adv_data), adv_data, 0, NULL);
-        ble_gap_adv_start(GAP_CONN_MODE_UNDIRECTED);
+        ble_gap_adv_start(GAP_CONN_MODE_NON_CONN);
 
         printf("Start advertising...\r\n");
 
