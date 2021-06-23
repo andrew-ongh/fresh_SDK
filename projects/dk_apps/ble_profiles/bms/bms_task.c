@@ -96,10 +96,6 @@ static void delete_bond_cb(bms_delete_bond_op_t op, uint16_t conn_idx, uint16_t 
 static const bms_callbacks_t bms_cb = {
         .delete_bond = delete_bond_cb,
 };
-own_address_t own_address1 = {
-                .addr_type = PRIVATE_CNTL,
-                .addr = {0}
-};
 
 /*
  * Debug functions
@@ -534,6 +530,17 @@ void bms_task(void *params)
         /* Start BLE device as peripheral */
         ble_peripheral_start();
 
+        /* Set BLE address to be "private resolvable" using LE Privacy v1.2 */
+        own_address_t own_address1 = {
+                .addr_type = PRIVATE_CNTL,
+                .addr = {0}
+        };
+        ble_error_t status;
+        status = ble_gap_address_set(&own_address1 , 150);
+        if (status != BLE_STATUS_OK) {
+                printf("%s: failed. Status=%d\r\n", __func__, status);
+        }
+
         /* Register task to BLE framework to receive BLE event notifications */
         ble_register_app();
 
@@ -550,13 +557,6 @@ void bms_task(void *params)
 
 
         print_bonded_devices();
-
-        /* Set BLE address to be "private resolvable" using LE Privacy v1.2 */
-        ble_error_t status;
-        status = ble_gap_address_set(&own_address1 , 0x00FF);
-        if (status != BLE_STATUS_OK) {
-                printf("%s: failed. Status=%d\r\n", __func__, status);
-        }
 
         /* Set advertising data and start advertising */
         ble_gap_adv_data_set(sizeof(adv_data), adv_data, 0, NULL);
