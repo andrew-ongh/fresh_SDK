@@ -93,9 +93,9 @@ static void system_init(void *pvParameters)
          * task since they will suspend the task until the XTAL16M has settled and, maybe, the PLL
          * is locked.
          */
-        cm_sys_clk_init(sysclk_XTAL16M);
+        cm_sys_clk_init(sysclk_XTAL32M);
         cm_apb_set_clock_divider(apb_div1);
-        cm_ahb_set_clock_divider(ahb_div1);
+        cm_ahb_set_clock_divider(ahb_div2);
         cm_lp_clk_init();
 
         /*
@@ -119,7 +119,7 @@ static void system_init(void *pvParameters)
         /* Set the desired sleep mode. */
         pm_set_sleep_mode(INITIAL_SLEEP_MODE);
 
-        cm_sys_clk_set(sysclk_XTAL16M);
+        cm_sys_clk_set(sysclk_XTAL32M);
         hw_uart_send(HW_UART2, buf, strlen(buf)+1, NULL, NULL);
 
         /* Program WKUPCT to react to the button. */

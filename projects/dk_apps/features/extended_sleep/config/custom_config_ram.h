@@ -33,7 +33,7 @@
 
 #define dg_configUSE_LP_CLK                     LP_CLK_RCX
 #define dg_configCODE_LOCATION                  NON_VOLATILE_IS_NONE
-#define dg_configEXT_CRYSTAL_FREQ               EXT_CRYSTAL_IS_16M
+#define dg_configEXT_CRYSTAL_FREQ               EXT_CRYSTAL_IS_32M
 
 #define dg_configIMAGE_SETUP                    DEVELOPMENT_MODE
 #define dg_configEMULATE_OTP_COPY               (0)
