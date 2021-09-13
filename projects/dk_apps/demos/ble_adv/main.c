@@ -89,9 +89,15 @@ static void system_init( void *pvParameters )
          * task since they will suspend the task until the XTAL16M has settled and, maybe, the PLL
          * is locked.
          */
+#if (dg_configEXT_CRYSTAL_FREQ == EXT_CRYSTAL_IS_32M)
+        cm_sys_clk_init(sysclk_XTAL32M);
+        cm_apb_set_clock_divider(apb_div1);
+        cm_ahb_set_clock_divider(ahb_div2);
+#else
         cm_sys_clk_init(sysclk_XTAL16M);
         cm_apb_set_clock_divider(apb_div1);
         cm_ahb_set_clock_divider(ahb_div1);
+#endif
         cm_lp_clk_init();
 
         /*
@@ -107,7 +113,11 @@ static void system_init( void *pvParameters )
 #endif
 
         /* Set system clock */
+#if (dg_configEXT_CRYSTAL_FREQ == EXT_CRYSTAL_IS_32M)
+        cm_sys_clk_set(sysclk_XTAL32M);
+#else
         cm_sys_clk_set(sysclk_XTAL16M);
+#endif
 
         /* Prepare the hardware to run this demo. */
         prvSetupHardware();
