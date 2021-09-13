@@ -30,6 +30,7 @@
 #include "gapc_task.h"
 #include "gattc_task.h"
 #include "gattm_task.h"
+#include "hw_usb_charger.h"
 
 #include "platform_devices.h"
 
@@ -129,6 +130,27 @@ static void system_init( void *pvParameters )
         retarget_init();
 #endif
 
+        /* Set the 1.8V power rail for pins
+         *   NOTE:
+         *      The Dialog 14683 allows all GPIO pins, except the QSPI
+         *      fixed pins P0_0 -- P0_5, to configure their power rail to
+         *      either 3.3V or 1.8V.  It is *probable* that the QSPI pins
+         *      will always be tied to the 1.8v rail, but the datasheet is
+         *      not clear on this point. The GPIO pins default to the 3.3V
+         *      rail, so this code will only set those pins that need to be
+         *      set to 1.8V.
+         */
+
+        /* Sensor I2C bus: accelerometer, temp sensor, and optical sensor */
+        hw_gpio_configure_pin_power(HW_GPIO_PORT_0, HW_GPIO_PIN_7, HW_GPIO_POWER_VDD1V8P);
+        hw_gpio_configure_pin_power(HW_GPIO_PORT_1, HW_GPIO_PIN_3, HW_GPIO_POWER_VDD1V8P);
+
+        // Accelerometer Interrupt
+        hw_gpio_configure_pin_power(HW_GPIO_PORT_2, HW_GPIO_PIN_3, HW_GPIO_POWER_VDD1V8P);
+
+        // Optical Interrupt
+        hw_gpio_configure_pin_power(HW_GPIO_PORT_1, HW_GPIO_PIN_7, HW_GPIO_POWER_VDD1V8P);
+
         /* Thermistor */
         hw_gpio_configure_pin(HW_GPIO_PORT_1, HW_GPIO_PIN_4, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
         hw_gpio_configure_pin(HW_GPIO_PORT_1, HW_GPIO_PIN_6, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
@@ -166,6 +188,8 @@ static void system_init( void *pvParameters )
 
         /* charger */
         hw_gpio_configure_pin(HW_GPIO_PORT_2, HW_GPIO_PIN_4, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+
+        hw_charger_configure_usb_pins();
 
         /* Set the desired sleep mode. */
         pm_set_wakeup_mode(true);
