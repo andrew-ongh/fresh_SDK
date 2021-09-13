@@ -120,6 +120,8 @@ static void system_init( void *pvParameters )
         cm_sys_clk_set(sysclk_XTAL16M);
 #endif
 
+        REG_SET_BIT(CRG_PER, USBPAD_REG, USBPAD_EN);
+
         /* Prepare the hardware to run this demo. */
         prvSetupHardware();
 
@@ -189,7 +191,6 @@ static void system_init( void *pvParameters )
         /* charger */
         hw_gpio_configure_pin(HW_GPIO_PORT_2, HW_GPIO_PIN_4, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
 
-        hw_charger_configure_usb_pins();
 
         /* Set the desired sleep mode. */
         pm_set_wakeup_mode(true);

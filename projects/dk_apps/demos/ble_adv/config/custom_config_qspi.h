@@ -72,9 +72,9 @@
 #define dg_configUSE_USB_CHARGER                0
 #define dg_configALLOW_CHARGING_NOT_ENUM        1
 
-#define dg_configUSE_ProDK                      (1)
+#define dg_configUSE_ProDK                      (0)
 
-#define dg_configUSE_SW_CURSOR                  (1)
+#define dg_configUSE_SW_CURSOR                  (0)
 
 //
 // Enable the settings below to track OS heap usage, for profiling
