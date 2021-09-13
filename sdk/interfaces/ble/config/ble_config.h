@@ -186,7 +186,7 @@
  * \bsp_default_note{\bsp_config_option_app, \bsp_config_option_expert_only}
  */
 #ifndef dg_configBLE_PRIVACY_1_2
-#define dg_configBLE_PRIVACY_1_2             (1)
+#define dg_configBLE_PRIVACY_1_2             (0)
 #endif
 
 /**
