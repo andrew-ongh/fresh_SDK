@@ -119,6 +119,44 @@ static void system_init( void *pvParameters )
         retarget_init();
 #endif
 
+        /* Thermistor */
+        hw_gpio_configure_pin(HW_GPIO_PORT_1, HW_GPIO_PIN_4, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_1, HW_GPIO_PIN_6, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+
+        /* IR LED */
+        hw_gpio_configure_pin(HW_GPIO_PORT_0, HW_GPIO_PIN_6, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_GPIO, false);
+
+        /* SPI MAX30134 */
+        hw_gpio_configure_pin(HW_GPIO_PORT_2, HW_GPIO_PIN_2, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_1, HW_GPIO_PIN_1, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+
+        /* VM_ADC */
+        hw_gpio_configure_pin(HW_GPIO_PORT_2, HW_GPIO_PIN_4, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+
+        /* QSPI  */
+        hw_gpio_configure_pin(HW_GPIO_PORT_0, HW_GPIO_PIN_0, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_0, HW_GPIO_PIN_1, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_0, HW_GPIO_PIN_2, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_0, HW_GPIO_PIN_3, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_0, HW_GPIO_PIN_4, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_0, HW_GPIO_PIN_5, HW_GPIO_MODE_INPUT_PULLUP, HW_GPIO_FUNC_GPIO, true);
+
+        /* I2C */
+        hw_gpio_configure_pin(HW_GPIO_PORT_0, HW_GPIO_PIN_7, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_1, HW_GPIO_PIN_3, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+
+        /* SPI */
+        hw_gpio_configure_pin(HW_GPIO_PORT_1, HW_GPIO_PIN_0, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_1, HW_GPIO_PIN_2, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_1, HW_GPIO_PIN_5, HW_GPIO_MODE_INPUT_PULLUP, HW_GPIO_FUNC_GPIO, true);
+
+        /* interrupts  */
+        hw_gpio_configure_pin(HW_GPIO_PORT_1, HW_GPIO_PIN_7, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_configure_pin(HW_GPIO_PORT_2, HW_GPIO_PIN_3, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+
+        /* charger */
+        hw_gpio_configure_pin(HW_GPIO_PORT_2, HW_GPIO_PIN_4, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
+
         /* Set the desired sleep mode. */
         pm_set_wakeup_mode(true);
         pm_set_sleep_mode(pm_mode_extended_sleep);
