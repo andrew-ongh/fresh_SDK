@@ -36,6 +36,7 @@
 #define dg_configEXT_CRYSTAL_FREQ               EXT_CRYSTAL_IS_32M
 
 #define dg_configIMAGE_SETUP                    DEVELOPMENT_MODE
+#define dg_configENABLE_DEBUGGER                (0)
 #define dg_configEMULATE_OTP_COPY               (0)
 
 #define dg_configUSER_CAN_USE_TIMER1            (0)

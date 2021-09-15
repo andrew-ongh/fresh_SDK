@@ -159,6 +159,7 @@ static void system_init( void *pvParameters )
 
         /* IR LED */
         hw_gpio_configure_pin(HW_GPIO_PORT_0, HW_GPIO_PIN_6, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_GPIO, false);
+        hw_gpio_set_inactive(HW_GPIO_PORT_0, HW_GPIO_PIN_6);
 
         /* SPI MAX30134 */
         hw_gpio_configure_pin(HW_GPIO_PORT_2, HW_GPIO_PIN_2, HW_GPIO_MODE_INPUT, HW_GPIO_FUNC_GPIO, false);
@@ -249,22 +250,22 @@ int main( void )
  * \brief Initialize the peripherals domain after power-up.
  *
  */
-#if defined CONFIG_RETARGET
-static void periph_init(void)
-{
-#if   dg_configBLACK_ORCA_MB_REV == BLACK_ORCA_MB_REV_A
-        hw_gpio_set_pin_function(HW_GPIO_PORT_1, HW_GPIO_PIN_0, HW_GPIO_MODE_OUTPUT,
-                                                                        HW_GPIO_FUNC_UART2_TX);
-        hw_gpio_set_pin_function(HW_GPIO_PORT_1, HW_GPIO_PIN_5, HW_GPIO_MODE_OUTPUT,
-                                                                        HW_GPIO_FUNC_UART2_RX);
-#else
-        hw_gpio_set_pin_function(HW_GPIO_PORT_1, HW_GPIO_PIN_3, HW_GPIO_MODE_OUTPUT,
-                                                                        HW_GPIO_FUNC_UART2_TX);
-        hw_gpio_set_pin_function(HW_GPIO_PORT_2, HW_GPIO_PIN_3, HW_GPIO_MODE_OUTPUT,
-                                                                        HW_GPIO_FUNC_UART2_RX);
-#endif
-}
-#endif /* defined CONFIG_RETARGET */
+//#if defined CONFIG_RETARGET
+//static void periph_init(void)
+//{
+//#if   dg_configBLACK_ORCA_MB_REV == BLACK_ORCA_MB_REV_A
+//        hw_gpio_set_pin_function(HW_GPIO_PORT_1, HW_GPIO_PIN_0, HW_GPIO_MODE_OUTPUT,
+//                                                                        HW_GPIO_FUNC_UART2_TX);
+//        hw_gpio_set_pin_function(HW_GPIO_PORT_1, HW_GPIO_PIN_5, HW_GPIO_MODE_OUTPUT,
+//                                                                        HW_GPIO_FUNC_UART2_RX);
+//#else
+//        hw_gpio_set_pin_function(HW_GPIO_PORT_1, HW_GPIO_PIN_3, HW_GPIO_MODE_OUTPUT,
+//                                                                        HW_GPIO_FUNC_UART2_TX);
+//        hw_gpio_set_pin_function(HW_GPIO_PORT_2, HW_GPIO_PIN_3, HW_GPIO_MODE_OUTPUT,
+//                                                                        HW_GPIO_FUNC_UART2_RX);
+//#endif
+//}
+//#endif /* defined CONFIG_RETARGET */
 
 static void handle_evt_gap_connected(ble_evt_gap_connected_t *evt)
 {
@@ -304,6 +305,8 @@ static void ble_adv_demo_task(void *pvParameters)
 
         /* Set device name */
         ble_gap_device_name_set("Dialog ADV Demo", ATT_PERM_READ);
+
+
 
         /* Set advertising data */
         ble_gap_adv_data_set(sizeof(adv_data), adv_data, 0, NULL);
